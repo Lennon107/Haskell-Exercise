@@ -1,0 +1,7 @@
+module Main where
+
+main :: IO ()
+main = putStrLn "Hello, world!"
+
+boomBangs xs = [ if x < 10 then "Batman!"
+else "Robin!" | x <- xs, odd x]
