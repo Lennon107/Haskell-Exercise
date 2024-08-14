@@ -1,0 +1,4 @@
+in_range :: Int -> Int -> Int -> Bool
+in_range max min x =
+| (x >= min) && (x <= max) = True
+| otherwise = False
