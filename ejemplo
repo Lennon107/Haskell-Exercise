@@ -1,0 +1,11 @@
+module Main where
+printInfo :: Int -> String
+printInfo x
+
+  | x < 0 = "Dato no válido"
+  | x <= 10 = "El dato es menor o igual a 10"
+  | x > 10 && x < 100 =  "El valor es ideal"
+  | otherwise = "El valor es muy grande"
+
+main :: IO ()
+main = putStrLn "Hello, World!"
