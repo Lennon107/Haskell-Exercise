@@ -1,0 +1,30 @@
+module Tarea (potenciaDeSenal,dctII,autocorrelation,dotProduct) where
+
+-- Función para calcular la potencia de una señal
+
+potenciaDeSenal :: [Double] -> Double
+potenciaDeSenal xs = let n = fromIntegral (length xs)
+        in sum (map (^2) xs) / n
+
+-- Función para calcular la transformación discreta del coseno
+
+dctII :: [Double] -> [Double]
+dctII xs = [ alpha k * sum [ x * cos (pi * (2 * fromIntegral n + 1) * fromIntegral k / fromIntegral (2 * length xs)) | (x, n) <- zip xs [0..] ] | k <- [0..length xs - 1] ]
+  where
+    n = length xs
+    alpha k = if k == 0 then sqrt (1 / fromIntegral n) else sqrt (2 / fromIntegral n)
+
+-- Función para calcular el producto punto de dos listas
+dotProduct :: [Double] -> [Double] -> Double
+dotProduct [] _ = 0
+dotProduct _ [] = 0
+dotProduct (x:xs) (y:ys) = x * y + dotProduct xs ys
+
+-- Función para calcular la autocorrelación de una señal discreta
+autocorrelation :: [Double] -> [Double]
+autocorrelation xs =
+    let positiveCorr = [ dotProduct xs (shiftedSignal l) | l <- [0..length xs - 1]]
+        negativeCorr = reverse (tail positiveCorr)
+    in negativeCorr ++ positiveCorr
+  where
+    shiftedSignal l = take (length xs) (drop l xs ++ replicate l 0)
